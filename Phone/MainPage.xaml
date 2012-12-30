@@ -5,58 +5,73 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:phone1="clr-namespace:Phone"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
-
-    <!--LayoutRoot is the root grid where all page content is placed-->
+    
+    <phone:PhoneApplicationPage.Resources>
+        <phone1:ConditionToIconConverter x:Key="ConditionToIconConverter" />
+    </phone:PhoneApplicationPage.Resources>
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- LOCALIZATION NOTE:
-            To localize the displayed strings copy their values to appropriately named
-            keys in the app's neutral language resource file (AppResources.resx) then
-            replace the hard-coded text value between the attributes' quotation marks
-            with the binding clause whose path points to that string name.
+        <TextBlock Text="{Binding Location}" Style="{StaticResource PhoneTextNormalStyle}" Grid.Row="0" Margin="24,17,0,28"/>
 
-            For example:
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
 
-                Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+            <Grid  Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Run Text="{Binding Today.MaxTemp}" />
+                    <Run Text="R" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Run Text="{Binding Today.MinTemp}" />
+                    <Run Text="R" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Today.Condition,Converter={StaticResource ConditionToIconConverter}}" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" Grid.Column="1" Grid.RowSpan="2" Margin="25,0,0,0" FontSize="{StaticResource PhoneFontSizeHuge}" VerticalAlignment="Center"/>
 
-            This binding points to the template's string resource named "ApplicationTitle".
+				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="TODAY" VerticalAlignment="Center" Margin="204,137,215,10" Grid.ColumnSpan="2" Grid.Row="1" />
+            </Grid>
 
-            Adding supported languages in the Project Properties tab will create a
-            new resx file per language that can carry the translated values of your
-            UI strings. The binding in these examples will cause the value of the
-            attributes to be drawn from the .resx file that matches the
-            CurrentUICulture of the app at run time.
-         -->
-
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
-            <TextBlock Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
-
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-
+            <Grid Background="#FF5B5B5B" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                     <Run Text="{Binding Tomorrow.MaxTemp}" />
+                    <Run Text="R" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Run Text="{Binding Tomorrow.MinTemp}" />
+                    <Run Text="R" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Tomorrow.Condition,Converter={StaticResource ConditionToIconConverter}}" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" Grid.Column="1" Grid.RowSpan="2" Margin="25,0,0,0" FontSize="{StaticResource PhoneFontSizeHuge}" VerticalAlignment="Center"/>
+				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="TOMORROW" VerticalAlignment="Bottom" Margin="0,0,0,10" Grid.Row="1" Grid.ColumnSpan="2"/>
+            </Grid>
         </Grid>
-
-        <!--Uncomment to see an alignment grid to help ensure your controls are
-            aligned on common boundaries.  The image has a top margin of -32px to
-            account for the System Tray. Set this to 0 (or remove the margin altogether)
-            if the System Tray is hidden.
-
-            Before shipping remove this XAML and the image itself.-->
-        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
     </Grid>
-
 </phone:PhoneApplicationPage>

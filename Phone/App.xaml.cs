@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Resources;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
@@ -10,20 +9,12 @@ using Phone.Resources;
 
 namespace Phone
 {
-    public partial class App : Application
+    public partial class App
     {
-        /// <summary>
-        /// Provides easy access to the root frame of the Phone Application.
-        /// </summary>
-        /// <returns>The root frame of the Phone Application.</returns>
         public static PhoneApplicationFrame RootFrame { get; private set; }
 
-        /// <summary>
-        /// Constructor for the Application object.
-        /// </summary>
         public App()
         {
-            // Global handler for uncaught exceptions.
             UnhandledException += Application_UnhandledException;
 
             // Standard XAML initialization
