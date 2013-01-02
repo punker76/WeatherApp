@@ -3,15 +3,31 @@ using System.Threading.Tasks;
 using Common;
 using Common.Models;
 using Windows.Devices.Geolocation;
+using Windows.UI.Popups;
 
 namespace RT
 {
     public class LocationService : ILocationService
     {
+        private Position defaultPosition = new Position { Lat = 50, Long = 50 };
         public async Task<Position> GetLocation()
         {
-            var geolocator = new Geolocator();
-            geolocator.DesiredAccuracy = PositionAccuracy.Default;
+            if (!Settings.AskedForPermission)
+            {
+                bool? r = null;
+                var md = new MessageDialog("This application uses your location (GPS) to get the most accurate weather reading", "May I get your location from GPS?");
+                md.Commands.Add(new UICommand("Allow", (cmd) => r = true));
+                md.Commands.Add(new UICommand("Deny", (cmd) => r = false));
+ 
+                await md.ShowAsync();
+                Settings.AskedForPermission = true;
+                Settings.AllowGPS = (bool)r;
+            }
+
+            if (!Settings.AllowGPS)
+                return defaultPosition;
+
+            var geolocator = new Geolocator { DesiredAccuracy = PositionAccuracy.Default };
             var result = new Position();
             try
             {
@@ -22,15 +38,7 @@ namespace RT
             }
             catch (Exception ex)
             {
-                if ((uint)ex.HResult == 0x80004004)
-                {
-                    // the application does not have the right capability or the location master switch is off
-                    return null;
-                }
-                //else
-                {
-                    // something else happened acquring the location
-                }
+                return defaultPosition;
             }
 
             return result;

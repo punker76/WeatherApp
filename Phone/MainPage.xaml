@@ -74,4 +74,9 @@
             </Grid>
         </Grid>
     </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Minimized" >
+            <shell:ApplicationBarIconButton IconUri="/Images/minus.png" Click="ApplicationBarIconButton_OnClick" Text="Settings"  />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>
