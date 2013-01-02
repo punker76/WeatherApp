@@ -8,7 +8,7 @@ namespace Common
 {
     public abstract class AbstractWeatherClient
     {
-        public abstract Task<IList<Forecast>> GetForecast();
+        public abstract Task<IList<Forecast>> GetForecast(Position p);
 
         public async Task<string> Get(string uri)
         {

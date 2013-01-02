@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Common.Models;
+using Common.ViewModels;
 using Common.WorldWeatherOnline.Models;
 using Newtonsoft.Json;
 
@@ -9,18 +10,18 @@ namespace Common.WorldWeatherOnline
     public class WWOClient : AbstractWeatherClient
     {
         private readonly string _apikey;
-        private readonly string baseUrl = @"http://free.worldweatheronline.com/feed/weather.ashx?q=Melbourne,Australia&format=json&num_of_days=2&key=";
+        private readonly string baseUrl = @"http://free.worldweatheronline.com/feed/weather.ashx?q={0}&format=json&num_of_days=2&key={1}";
 
         public WWOClient(string apikey)
         {
             _apikey = apikey;
         }
 
-        public override async Task<IList<Forecast>> GetForecast()
+        public override async Task<IList<Forecast>> GetForecast(Position p)
         {
             List<Forecast> forecasts = new List<Forecast>();
 
-            var result = JsonConvert.DeserializeObject<RootObject>(await Get(baseUrl + _apikey));
+            var result = JsonConvert.DeserializeObject<RootObject>(await Get(string.Format(baseUrl, (p.Lat.ToString("0.00") + "," + p.Long.ToString("0.00")), _apikey)));
             foreach (var d in result.data.weather)
             {
                 forecasts.Add(new Forecast

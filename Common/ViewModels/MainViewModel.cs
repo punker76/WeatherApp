@@ -9,6 +9,7 @@ namespace Common.ViewModels
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private readonly ILocationService _gps;
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -44,16 +45,17 @@ namespace Common.ViewModels
         private Forecast _tomorrow;
 
         public string Location { get; set; }
-        public MainViewModel()
+        public MainViewModel(ILocationService gps)
         {
+            _gps = gps;
             Location = "MELBOURNE, AUSTRALIA";
-            client = new WorldWeatherOnline.WWOClient("your-api-key");
+            client = new WWOClient("your-api-key");
             LoadData();
         }
 
         public async Task LoadData()
         {
-            var results = await client.GetForecast();
+            var results = await client.GetForecast(await _gps.GetLocation());
             Today = results[0];
             Tomorrow = results[1];
         }

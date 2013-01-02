@@ -12,7 +12,7 @@ namespace Phone
 
         void MainPage_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
-            var viewModel = new MainViewModel();
+            var viewModel = new MainViewModel(new LocationService());
             DataContext = viewModel;
         }
     }

@@ -12,7 +12,7 @@ namespace RT
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            var viewModel = new MainViewModel();
+            var viewModel = new MainViewModel(new LocationService());
             DataContext = viewModel;
         }
     }
