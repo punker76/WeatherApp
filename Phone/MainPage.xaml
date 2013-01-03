@@ -1,0 +1,82 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="Phone.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:phone1="clr-namespace:Phone"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+    
+    <phone:PhoneApplicationPage.Resources>
+        <phone1:ConditionToIconConverter x:Key="ConditionToIconConverter" />
+    </phone:PhoneApplicationPage.Resources>
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="{Binding Location}" Style="{StaticResource PhoneTextNormalStyle}" Grid.Row="0" Margin="24,17,0,28"/>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Grid  Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Run Text="{Binding Today.MaxTemp}" />
+                    <Run Text="R" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Run Text="{Binding Today.MinTemp}" />
+                    <Run Text="R" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Today.Condition,Converter={StaticResource ConditionToIconConverter}}" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" Grid.Column="1" Grid.RowSpan="2" Margin="25,0,0,0" FontSize="{StaticResource PhoneFontSizeHuge}" VerticalAlignment="Center"/>
+
+				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="TODAY" VerticalAlignment="Center" Margin="204,137,215,10" Grid.ColumnSpan="2" Grid.Row="1" />
+            </Grid>
+
+            <Grid Background="#FF5B5B5B" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="0" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                     <Run Text="{Binding Tomorrow.MaxTemp}" />
+                    <Run Text="R" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Grid.Column="0" Grid.Row="1" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Run Text="{Binding Tomorrow.MinTemp}" />
+                    <Run Text="R" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" />
+                </TextBlock>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Tomorrow.Condition,Converter={StaticResource ConditionToIconConverter}}" FontFamily="/Phone;component/Assets/Fonts.zip#Climacons" Grid.Column="1" Grid.RowSpan="2" Margin="25,0,0,0" FontSize="{StaticResource PhoneFontSizeHuge}" VerticalAlignment="Center"/>
+				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="TOMORROW" VerticalAlignment="Bottom" Margin="0,0,0,10" Grid.Row="1" Grid.ColumnSpan="2"/>
+            </Grid>
+        </Grid>
+    </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar Mode="Minimized" >
+            <shell:ApplicationBarIconButton IconUri="/Images/minus.png" Click="ApplicationBarIconButton_OnClick" Text="Settings"  />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>
