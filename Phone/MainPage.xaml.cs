@@ -21,5 +21,7 @@ namespace Phone
         {
             NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
         }
+
+
     }
 }
